@@ -27,18 +27,28 @@ function iniciarApp(){
 // valida el formulario 
 function validarFormulario (e){
     e.preventDefault();
+   
+
     if(e.target.value.length > 0){
         console.log('si hay algo');
     }else{
         e.target.classList.add('border', 'border-red-500');
 
-        mostrarError();
+        mostrarError('Todos los Campos son Obligatorios');
+    }
+
+    if(e.target.type === 'email'){
+        //Validacion regular
+        const resultado = e.target.value.indexOf('@');
+        if(resultado < 0){
+            mostrarError('El email no es válido');
+        }
     }
 }
 
-function mostrarError(){
+function mostrarError(mensaje){
     const mensajeError = document.createElement('p');
-    mensajeError.textContent = 'Todos los campos son obligatorios'
+    mensajeError.textContent = mensaje;
     mensajeError.classList.add('border', 'border-red-500','background-red-100', 'text-red-500' , 'p-3', 'mt-5', 'text-center' , 'error');
 
     //
