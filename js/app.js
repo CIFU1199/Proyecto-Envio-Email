@@ -1,5 +1,6 @@
 //Variables 
 const btnEnviar = document.querySelector('#enviar');
+const btnReset = document.querySelector('#resetBtn');
 const formulario = document.querySelector('#enviar-mail');
 
 //Variables para campos 
@@ -19,6 +20,15 @@ function eventListeners(){
     email.addEventListener('blur', validarFormulario);
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
+
+    //reinicia el formulario 
+    btnReset.addEventListener('click', reseteaForm);
+
+    //enviar email  
+    formulario.addEventListener('submit', enviarEmail);
+
+
+
 }
 
 //Funciones 
@@ -90,3 +100,46 @@ function mostrarError(mensaje){
 
 }
 
+//envia el email 
+function enviarEmail(e){
+    e.preventDefault();
+    
+    // Mostrar el spinner 
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+    // Despued de 3s ocultar el spinner y mostrar el mensaje 
+    /*
+    
+    
+    setInterval(()=>{
+        console.log('esta funcion se ejecuta cada de 3s ')
+    } , 3000);
+    */
+
+    setTimeout(()=>{
+        spinner.style.display = 'none';
+
+        // mensaje que dice que se envio correctamente 
+
+        const parrafo = document.createElement('p');
+        parrafo.textContent = 'El mensaje se envio correctamente';
+        parrafo.classList.add('text-center', 'my-10', 'p-3' ,'bg-green-500' , 'text-white','font-bold','uppercase');
+        //inserta el parrafo antes del spinner 
+        formulario.insertBefore(parrafo , spinner);
+
+        setTimeout(() =>{
+            parrafo.remove(); // elimina el mensaje de  éxito
+            reseteaForm();
+        } ,5000);
+    } , 3000);    
+    
+}
+
+
+// funcion que resetea el formulario 
+
+function reseteaForm(){
+    formulario.reset();
+    iniciarApp();
+}
